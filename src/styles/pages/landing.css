@@ -42,7 +42,7 @@
 
 .content-wrapper .location{
     position: absolute;
-    right: 0;
+    margin-left:350px;
     top:0;
 
     font-size:24px;
@@ -52,6 +52,34 @@
     flex-direction: column;
     text-align: right;
 
+
+}
+
+.content-wrapper .enter-dashboard{
+    position: absolute;
+    right:0;
+    top:0;
+
+    width: 222px;
+    height: 56px;
+    background: #12D4E0;
+    border-radius: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+
+    transition: background-color 0.2s;
+
+}
+
+.content-wrapper .enter-dashboard strong{
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: right;
+    color:#FFFFFF;
 
 }
 
@@ -80,3 +108,10 @@
     background: #96feff;
 }
 
+.content-wrapper .enter-dashboard:hover{
+    background:#96FEFF ;
+}
+
+.content-wrapper .enter-dashboard strong:hover{
+    color: #15C3D6;
+}
