@@ -18,6 +18,14 @@ export default function Login(){
 
              <div className='login-form'>
                <h2>Fazer login</h2>
+               <p>E-mail</p>
+               <input type="text"/>
+               <p>Senha</p>
+               <input type="text"/>
+
+               <button>
+                 Entrar
+               </button>
               
              </div>
         </div>
