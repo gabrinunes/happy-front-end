@@ -2,6 +2,8 @@ import React from 'react'
 
 import '../styles/pages/login.css';
 import logoImg from '../images/Logotipo.svg'
+import { Link } from 'react-router-dom';
+import {FiArrowLeft} from 'react-icons/fi'
 
 
 export default function Login(){
@@ -15,18 +17,28 @@ export default function Login(){
              <p>Pará</p> 
 
              </aside>
-
              <div className='login-form'>
                <h2>Fazer login</h2>
                <p>E-mail</p>
                <input type="text"/>
                <p>Senha</p>
-               <input type="text"/>
+               <input type="password"/>
+
+               <Link to="/" className="icon-back">
+                 <FiArrowLeft size={22} color="#15C3D6"/>
+               </Link>
+
+               <div className="login-info">
+                <input type="checkbox" id="icon-checkbox"/>
+                <label className="icon-description">Lembrar-me</label>
+                <Link to="/" style={{textDecoration:'none'}}>
+                <p>Esqueci minha senha</p>
+                </Link>  
+                 </div> 
 
                <button>
                  Entrar
                </button>
-              
              </div>
         </div>
     )

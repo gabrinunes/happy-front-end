@@ -1,7 +1,8 @@
 #page-login{
     height: 100vh;
 
-    display: flex;    
+    display: flex;
+    background: #FFFFFF;    
 
 
 }
@@ -22,6 +23,23 @@
     margin-top: 100px;
 }
 
+#page-login .icon-back{
+    position: absolute;
+    top: 0;
+    right:0;
+    width:48px;
+    height: 48px;
+
+    margin:40px 43px;
+    background:#EBF2F5;
+    border-radius: 20px;
+    box-shadow: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
  .login-form {
      display: flex;
      flex-direction: column;
@@ -31,12 +49,85 @@
     
 }
 
+input{
+    height: 64px;
+    padding: 0 16px;
+    color: #5C8599;
+}
+
+
+.login-info{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.login-info #icon-checkbox{
+    position:absolute;
+    width:24px;
+    height: 24px;
+    opacity:0;
+}
+
+label{
+    display: flex;
+}
+
+#icon-checkbox[type="checkbox"] +label::before{
+    content: "";
+    display:inline-block;
+    width:24px;
+    height:24px;
+    margin-right: 16px;
+    background: #F5F8FA;
+
+    /* Back / Lines in white */
+    border: 1px solid #D3E2E5;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+
+#icon-checkbox[type="checkbox"]:checked +label::before{
+    content: "";
+    display:inline-block;
+    width:24px;
+    height:24px;
+    margin-right: 16px;
+   
+    
+    /* Back / Lines in white */
+    background: #37C77F;
+
+    /* Color / Green */
+    border: 2px solid #37C77F;
+    box-sizing: border-box;
+    border-radius: 8px;
+
+
+    
+}
+
+
+
 .login-form h2{
     margin-bottom: 10%;
     font-weight: bold;
     font-size: 32px;
     line-height: 34px;
     color: #5C8599;
+}
+
+.login-form label{
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    margin-bottom: 8px;
+
+/* identical to box height */
+
+/* Texts / Complementos */
+color: #8FA7B3;
 }
 
 .login-form button{
@@ -49,6 +140,7 @@
     line-height: 22px;
     border: 0;
     color: #FFFFFF;
+    margin-top: 42px;
 
     transition: background-color 0.2s;
 
