@@ -31,7 +31,7 @@ export default function Login(){
                <div className="login-info">
                 <input type="checkbox" id="icon-checkbox"/>
                 <label className="icon-description">Lembrar-me</label>
-                <Link to="/" style={{textDecoration:'none'}}>
+                <Link to="/forgotPassword" style={{textDecoration:'none'}}>
                 <p>Esqueci minha senha</p>
                 </Link>  
                  </div> 
