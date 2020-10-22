@@ -1,80 +1,82 @@
-import React, { useState, useEffect } from "react";
-import { FaWhatsapp } from "react-icons/fa";
-import { FiClock, FiInfo } from "react-icons/fi";
-import { Map, Marker, TileLayer } from "react-leaflet";
-import {useParams} from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { FaWhatsapp } from 'react-icons/fa';
+import { FiClock, FiInfo } from 'react-icons/fi';
+import { Map, Marker, TileLayer } from 'react-leaflet';
+import { useParams } from 'react-router-dom';
 
 import '../styles/pages/orphanage.css';
-import SideBar from "../components/Sidebar";
-import MapIcon from "../utils/mapIcon";
-import api from "../services/api";
+import SideBar from '../components/Sidebar';
+import MapIcon from '../utils/mapIcon';
+import api from '../services/api';
 
-interface Orphanage{
-  name:string
-  latitude:number;
-  longitude:number;
-  about:string;
-  instructions:string;
-  opening_hours:string;
-  open_on_weekends:string;
-  images:Array<{
-    id:number;
-    url:string;
+interface Orphanage {
+  name: string;
+  latitude: number;
+  longitude: number;
+  about: string;
+  instructions: string;
+  opening_hours: string;
+  open_on_weekends: string;
+  images: Array<{
+    id: number;
+    url: string;
   }>;
 }
 
-interface OrphanageParams{
-  id:string;
+interface OrphanageParams {
+  id: string;
 }
-
 
 export default function Orphanage() {
   const params = useParams<OrphanageParams>();
-  const [orphanage,setOrphanage] = useState<Orphanage>();
-  const [activeImageIndex,setActiveImageIndex] = useState(0);
+  const [orphanage, setOrphanage] = useState<Orphanage>();
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-  useEffect(()=>{
-   api.get(`orphanages/${params.id}`).then(response=>{
-       setOrphanage(response.data);
-   })
-  },[params.id])
+  useEffect(() => {
+    api.get(`orphanages/${params.id}`).then(response => {
+      setOrphanage(response.data);
+    });
+  }, [params.id]);
 
-  if(!orphanage){
-    return <p>Carregando</p>
+  if (!orphanage) {
+    return <p>Carregando</p>;
   }
-
 
   return (
     <div id="page-orphanage">
-     
-     <SideBar/>
+      <SideBar />
 
       <main>
         <div className="orphanage-details">
-          <img src={orphanage.images[activeImageIndex].url} alt={orphanage.name} />
+          <img
+            src={orphanage.images[activeImageIndex].url}
+            alt={orphanage.name}
+          />
 
           <div className="images">
-            {orphanage.images.map((orphImages,index)=>(
-              <button className={activeImageIndex === index ? 'active' : ''} 
-              type="button" 
-              key={orphImages.id}
-              onClick={()=>{
-                setActiveImageIndex(index)
-              }}
+            {orphanage.images.map((orphImages, index) => (
+              <button
+                className={activeImageIndex === index ? 'active' : ''}
+                type="button"
+                key={orphImages.id}
+                onClick={() => {
+                  setActiveImageIndex(index);
+                }}
               >
-              <img src={orphImages.url} alt={orphanage.name} />
-            </button>
+                <img src={orphImages.url} alt={orphanage.name} />
+              </button>
             ))}
           </div>
-          
+
           <div className="orphanage-details-content">
-           <h1>{orphanage.name}</h1>
-            <p>{orphanage.about}.</p>
+            <h1>{orphanage.name}</h1>
+            <p>
+{orphanage.about}.</p>
 
             <div className="map-container">
-              <Map 
-                center={[orphanage.latitude,orphanage.longitude]} 
-                zoom={16} 
+              <Map
+                center={[orphanage.latitude, orphanage.longitude]}
+                zoom={16}
                 style={{ width: '100%', height: 280 }}
                 dragging={false}
                 touchZoom={false}
@@ -82,12 +84,22 @@ export default function Orphanage() {
                 scrollWheelZoom={false}
                 doubleClickZoom={false}
               >
-                <TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
-                <Marker interactive={false} icon={MapIcon} position={[orphanage.latitude,orphanage.longitude]} />
+                <TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                <Marker
+                  interactive={false}
+                  icon={MapIcon}
+                  position={[orphanage.latitude, orphanage.longitude]}
+                />
               </Map>
 
               <footer>
-                <a target="_blank" rel="noopener noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${orphanage.latitude},${orphanage.longitude}`}>Ver rotas no Google Maps</a>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${orphanage.latitude},${orphanage.longitude}`}
+                >
+                  Ver rotas no Google Maps
+                </a>
               </footer>
             </div>
 
@@ -99,20 +111,26 @@ export default function Orphanage() {
             <div className="open-details">
               <div className="hour">
                 <FiClock size={32} color="#15B6D6" />
-                Segunda à Sexta <br />
+                Segunda à Sexta 
+{' '}
+<br />
                 {orphanage.opening_hours}
               </div>
               {orphanage.open_on_weekends ? (
                 <div className="open-on-weekends">
-                <FiInfo size={32} color="#39CC83" />
-                Atendemos <br />
-                fim de semana
-              </div>
-              )  :(<div className="open-on-weekends dont-open">
-              <FiInfo size={32} color="#FF669D" />
-             Não Atendemos <br />
-              fim de semana
-            </div>)}
+                  <FiInfo size={32} color="#39CC83" />
+                  Atendemos 
+{' '}
+<br />
+                  fim de semana
+                </div>
+              ) : (
+                <div className="open-on-weekends dont-open">
+                  <FiInfo size={32} color="#FF669D" />
+                  Não Atendemos <br />
+                  fim de semana
+                </div>
+              )}
             </div>
 
             <button type="button" className="contact-button">

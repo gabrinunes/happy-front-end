@@ -133,7 +133,7 @@ label{
 color: #8FA7B3;
 }
 
-.login-form button{
+.login-form .login-button{
     width: 360px;
     height: 64px;
     border-radius: 20px;
@@ -144,6 +144,11 @@ color: #8FA7B3;
     border: 0;
     color: #FFFFFF;
     margin-top: 42px;
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     transition: background-color 0.2s;
 
@@ -152,7 +157,7 @@ color: #8FA7B3;
 text-align: center;
 }
 
-.login-form button:hover{
+.login-form .login-button:hover{
     background: #36CF82;
 }
 

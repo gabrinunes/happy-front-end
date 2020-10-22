@@ -1,0 +1,64 @@
+.dashboard-content{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: space-evenly;
+}
+
+.orphanage-content{
+   display: grid;
+   grid-template-columns: repeat(2,1fr);
+}
+
+.orphanage-card{
+    width: 496px;
+    height: 271px;
+    margin-left:15px;
+    margin-bottom: 18px;
+    background: #FFFFFF;
+
+    /* Back / Lines in white */
+    border: 1px solid #D3E2E5;
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+
+.orphanage-info{
+  display: flex;
+  align-items: center;
+  justify-content:center;
+}
+
+.orphanage-info .orphanage-icons{
+  width: 38px;
+  height: 38px;
+  margin-top: 10px;
+  margin-left: 2%;
+  background: #EBF2F5;
+  border-radius: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.orphanage-info-name{
+  color: black;
+  margin-right: 100px;
+}
+
+.header-title{
+  width: 80%;  
+  margin-top: 3%;
+  font-size: 32px;
+  line-height: 34px;
+  color: #5C8599;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  margin-left: 13%;
+  border-bottom: 1px solid #D3E2E5;
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+}

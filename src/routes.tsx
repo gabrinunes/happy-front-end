@@ -8,6 +8,7 @@ import CreateOrphanage from './pages/CreateOrphanage';
 import Login from './pages/Login'
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPasswrod from './pages/ResetPassword';
+import Dashboard from './pages/Dashboard';
 
 function Routes(){
     return (
@@ -24,6 +25,8 @@ function Routes(){
 
       <Route path="/forgotPassword" component={ForgotPassword}/>
       <Route path="/resetPassword" component={ResetPasswrod}/>
+
+      <Route path="/dashboard" component={Dashboard}/>
       </Switch>
       </BrowserRouter>
     );

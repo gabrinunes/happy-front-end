@@ -6,13 +6,24 @@ import { FiArrowLeft } from 'react-icons/fi';
 import '../styles/components/sidebar.css'
 import { useHistory } from 'react-router-dom';
 
-export default function SideBar(){
+interface SidebarProps{
+  showIconsDashboard?:boolean;
+}
+
+export default function SideBar({showIconsDashboard}:SidebarProps){
     const { goBack } = useHistory();
 
     return(
         <aside className="app-sidebar">
         <img src={mapMarkerImg} alt="Happy" />
-
+        {showIconsDashboard ?(
+          <div className="app-sidebar-midle">
+          <FiArrowLeft size={24} color="#FFF" />
+          <FiArrowLeft size={24} color="#FFF" />
+          </div>
+        ):(
+          <div></div>
+        )}
         <footer>
           <button type="button" onClick={goBack}>
             <FiArrowLeft size={24} color="#FFF" />

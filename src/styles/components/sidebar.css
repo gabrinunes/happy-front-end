@@ -9,6 +9,18 @@ aside.app-sidebar {
     justify-content: space-between;
     align-items: center;
   }
+
+.app-sidebar-midle{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app-sidebar-midle svg{
+   margin-top: 16px;
+   background: #12AFCB;
+
+}
   
 aside.app-sidebar img {
     width: 48px;
