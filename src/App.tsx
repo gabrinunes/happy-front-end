@@ -1,15 +1,21 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
-import {FiArrowRight} from 'react-icons/fi'
+import { FiArrowRight } from 'react-icons/fi';
 
-import './styles/global.css'
-import 'leaflet/dist/leaflet.css'
+import './styles/global.css';
+import 'leaflet/dist/leaflet.css';
 
+import { BrowserRouter } from 'react-router-dom';
 
 import Routes from './routes';
 
+import AppProvider from './hooks';
+
 function App() {
   return (
-    <Routes/>
+    <AppProvider>
+      <Routes />
+    </AppProvider>
   );
 }
 

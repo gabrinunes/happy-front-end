@@ -1,11 +1,22 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import React, { useEffect } from 'react';
 
 import '../styles/pages/login.css';
 import { Link } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import logoImg from '../images/Logotipo.svg';
+import { useAuth } from '../hooks/auth';
 
 export default function Login() {
+  const { signIn } = useAuth();
+
+  async function handleLogin(email: any, password: any) {
+    await signIn({
+      email,
+      password,
+    });
+  }
+
   return (
     <div id="page-login">
       <aside>
@@ -33,9 +44,12 @@ export default function Login() {
           </Link>
         </div>
 
-        <Link to="/dashboard" className="login-button">
+        <button
+          onClick={() => handleLogin('gn_cunha@hotmail.com', '123456')}
+          className="login-button"
+        >
           Entrar
-        </Link>
+        </button>
       </div>
     </div>
   );

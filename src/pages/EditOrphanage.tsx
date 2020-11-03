@@ -1,8 +1,9 @@
-import React, { useState, FormEvent, ChangeEvent } from 'react';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React, { useState, FormEvent, ChangeEvent, useEffect } from 'react';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 import { FiPlus } from 'react-icons/fi';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import SideBar from '../components/Sidebar';
 
@@ -10,18 +11,39 @@ import '../styles/pages/create-orphanage.css';
 import MapIcon from '../utils/mapIcon';
 import api from '../services/api';
 
-export default function CreateOrphanage() {
+interface OrphanageParams {
+  id: string;
+}
+
+export default function EditOrphanage() {
+  const params = useParams<OrphanageParams>();
+
   const history = useHistory();
 
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
 
   const [name, setName] = useState('');
   const [about, setAbout] = useState('');
-  const [instructions, setInstructions] = useState('');
+  const [instructions, setInstructions] = useState('aaaaa');
   const [opening_hours, SetOpeningHours] = useState('');
   const [open_on_weekends, setOpenOnWeekends] = useState(true);
   const [images, SetImages] = useState<File[]>([]);
   const [previewImages, SetPreviewImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    api.get(`/orphanages/${params.id}`).then(response => {
+      setName(response.data.name);
+      setAbout(response.data.about);
+      setInstructions(response.data.instructions);
+      setOpenOnWeekends(response.data.open_on_weekends);
+      SetOpeningHours(response.data.opening_hours);
+      setPosition({
+        latitude: response.data.latitude,
+        longitude: response.data.longitude,
+      });
+      console.log(response.data);
+    });
+  }, [params.id]);
 
   function handleMapClick(event: LeafletMouseEvent) {
     const { lat, lng } = event.latlng;
@@ -66,10 +88,10 @@ export default function CreateOrphanage() {
       data.append('images', image);
     });
 
-    await api.post('orphanages', data);
+    // await api.post('orphanages', data);
 
-    alert('cadastro realizado com sucesso!!!');
-    history.push('/app');
+    // alert('cadastro realizado com sucesso!!!');
+    // history.push('/app');
   }
 
   return (
@@ -109,7 +131,8 @@ export default function CreateOrphanage() {
 
             <div className="input-block">
               <label htmlFor="about">
-                Sobre <span>Máximo de 300 caracteres</span>
+                Sobre
+                <span>Máximo de 300 caracteres</span>
               </label>
               <textarea
                 id="name"
@@ -190,5 +213,3 @@ export default function CreateOrphanage() {
     </div>
   );
 }
-
-// return `https://a.tile.openstreetmap.org/${z}/${x}/${y}.png`;

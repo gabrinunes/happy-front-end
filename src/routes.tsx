@@ -1,35 +1,36 @@
-import React from 'react'
-import {BrowserRouter,Switch,Route} from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Landing from './pages/Landing';
 import OrphanagesMap from './pages/OrphanagesMap';
 import Orphanage from './pages/Orphanage';
 import CreateOrphanage from './pages/CreateOrphanage';
-import Login from './pages/Login'
+import EditOrphanage from './pages/EditOrphanage';
+import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPasswrod from './pages/ResetPassword';
 import Dashboard from './pages/Dashboard';
 
-function Routes(){
-    return (
-      <BrowserRouter>
+function Routes() {
+  return (
+    <BrowserRouter>
       <Switch>
-        
-      <Route path="/" exact component={Landing}/>
-      <Route path="/app" component={OrphanagesMap}/>
-      
-      <Route path="/orphanages/create" component={CreateOrphanage}/>
-      <Route path="/orphanages/:id" component={Orphanage}/>
+        <Route path="/" exact component={Landing} />
+        <Route path="/app" component={OrphanagesMap} />
 
-      <Route path="/login" component={Login}/>
+        <Route path="/orphanages/create" component={CreateOrphanage} />
+        <Route path="/orphanages/edit/:id" component={EditOrphanage} />
+        <Route path="/orphanages/:id" component={Orphanage} />
 
-      <Route path="/forgotPassword" component={ForgotPassword}/>
-      <Route path="/resetPassword" component={ResetPasswrod}/>
+        <Route path="/login" component={Login} />
 
-      <Route path="/dashboard" component={Dashboard}/>
+        <Route path="/forgotPassword" component={ForgotPassword} />
+        <Route path="/resetPassword" component={ResetPasswrod} />
+
+        <Route path="/dashboard" component={Dashboard} />
       </Switch>
-      </BrowserRouter>
-    );
+    </BrowserRouter>
+  );
 }
 
 export default Routes;

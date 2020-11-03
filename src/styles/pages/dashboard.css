@@ -6,6 +6,7 @@
 }
 
 .orphanage-content{
+   width: 70%;
    display: grid;
    grid-template-columns: repeat(2,1fr);
 }
@@ -49,7 +50,7 @@
 }
 
 .header-title{
-  width: 80%;  
+  width: 80%;
   margin-top: 3%;
   font-size: 32px;
   line-height: 34px;
