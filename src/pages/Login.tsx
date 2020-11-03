@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import '../styles/pages/login.css';
 import { Link } from 'react-router-dom';
@@ -8,6 +8,8 @@ import logoImg from '../images/Logotipo.svg';
 import { useAuth } from '../hooks/auth';
 
 export default function Login() {
+  const [email, SetEmail] = useState('');
+  const [password, SetPassword] = useState('');
   const { signIn } = useAuth();
 
   async function handleLogin(email: any, password: any) {
@@ -28,9 +30,17 @@ export default function Login() {
       <div className="login-form">
         <h2>Fazer login</h2>
         <p>E-mail</p>
-        <input type="text" />
+        <input
+          type="text"
+          value={email}
+          onChange={e => SetEmail(e.target.value)}
+        />
         <p>Senha</p>
-        <input type="password" />
+        <input
+          type="password"
+          value={password}
+          onChange={e => SetPassword(e.target.value)}
+        />
 
         <Link to="/" className="icon-back">
           <FiArrowLeft size={22} color="#15C3D6" />
@@ -45,7 +55,7 @@ export default function Login() {
         </div>
 
         <button
-          onClick={() => handleLogin('gn_cunha@hotmail.com', '123456')}
+          onClick={() => handleLogin(email, password)}
           className="login-button"
         >
           Entrar
