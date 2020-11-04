@@ -32,7 +32,7 @@ interface SignInCredentials {
 interface AuthContextData {
   user: User;
   orphanage: any;
-  validOrphanage: any;
+  validOrphanage: boolean | undefined;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
   GetListOrphanages(valid: boolean): Promise<void>;
