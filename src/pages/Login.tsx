@@ -10,7 +10,7 @@ import { useAuth } from '../hooks/auth';
 export default function Login() {
   const [email, SetEmail] = useState('');
   const [password, SetPassword] = useState('');
-  const [rememberLogin, SetRememberLogin] = useState(false);
+  const [rememberLogin, SetRememberLogin] = useState(true);
   const { signIn } = useAuth();
 
   async function handleLogin(
