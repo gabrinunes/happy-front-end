@@ -10,14 +10,22 @@ import { useAuth } from '../hooks/auth';
 export default function Login() {
   const [email, SetEmail] = useState('');
   const [password, SetPassword] = useState('');
+  const [rememberLogin, SetRememberLogin] = useState(false);
   const { signIn } = useAuth();
 
-  async function handleLogin(email: any, password: any) {
+  async function handleLogin(
+    email: any,
+    password: any,
+    rememberLogin: boolean,
+  ) {
     await signIn({
       email,
       password,
+      rememberLogin,
     });
   }
+
+  console.log(rememberLogin);
 
   return (
     <div id="page-login">
@@ -47,7 +55,12 @@ export default function Login() {
         </Link>
 
         <div className="login-info">
-          <input type="checkbox" id="icon-checkbox" />
+          <input
+            type="checkbox"
+            id="icon-checkbox"
+            checked={rememberLogin}
+            onChange={e => SetRememberLogin(e.target.checked)}
+          />
           <label className="icon-description">Lembrar-me</label>
           <Link to="/forgotPassword" style={{ textDecoration: 'none' }}>
             <p>Esqueci minha senha</p>
@@ -55,7 +68,7 @@ export default function Login() {
         </div>
 
         <button
-          onClick={() => handleLogin(email, password)}
+          onClick={() => handleLogin(email, password, rememberLogin)}
           className="login-button"
         >
           Entrar

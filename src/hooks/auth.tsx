@@ -15,6 +15,7 @@ interface AuthState {
 interface SignInCredentials {
   email: string;
   password: string;
+  rememberLogin: boolean;
 }
 
 interface AuthContextData {
@@ -25,11 +26,13 @@ interface AuthContextData {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({ children }) => {
+  const [remember, SetRemember] = useState(false);
   const [data, SetData] = useState<AuthState>(() => {
     const token = localStorage.getItem('@Happy:token');
     const user = localStorage.getItem('@Happy:user');
+    const rememberLog = localStorage.getItem('@Happy:remember');
 
-    if (token && user) {
+    if (token && user && rememberLog === 'true') {
       api.defaults.headers.Authorization = `Bearer ${token}`;
 
       return { token, user: JSON.parse(user) };
@@ -38,7 +41,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     return {} as AuthState;
   });
 
-  const signIn = useCallback(async ({ email, password }) => {
+  const signIn = useCallback(async ({ email, password, rememberLogin }) => {
     const response = await api.post('session', {
       email,
       password,
@@ -50,8 +53,10 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     localStorage.setItem('@Happy:token', token);
     localStorage.setItem('@Happy:user', JSON.stringify(user));
+    localStorage.setItem('@Happy:remember', rememberLogin);
 
     SetData({ token, user });
+    SetRemember(rememberLogin);
   }, []);
 
   return (
