@@ -111,7 +111,7 @@ export default function Orphanage() {
             <div className="open-details">
               <div className="hour">
                 <FiClock size={32} color="#15B6D6" />
-                Segunda à Sexta 
+                Segunda à Sexta
 {' '}
 <br />
                 {orphanage.opening_hours}
@@ -119,7 +119,7 @@ export default function Orphanage() {
               {orphanage.open_on_weekends ? (
                 <div className="open-on-weekends">
                   <FiInfo size={32} color="#39CC83" />
-                  Atendemos 
+                  Atendemos
 {' '}
 <br />
                   fim de semana

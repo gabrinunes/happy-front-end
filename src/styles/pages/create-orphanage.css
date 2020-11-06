@@ -19,6 +19,42 @@ form.create-orphanage-form {
   overflow: hidden;
 }
 
+ .container-buttons{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-top: 28px;
+}
+
+.accept-button{
+  width: 264px;
+height: 64px;
+left: 778px;
+border: 0;
+color: #FFFFFF;
+  font-weight: 800;
+margin-left: 10px;
+
+
+/* Color / Green */
+background: #3CDC8C;
+border-radius: 20px;
+}
+
+.delete-button{
+  width: 264px;
+height: 64px;
+left: 494px;
+color: #FFFFFF;
+  font-weight: 800;
+border: 0;
+
+
+/* Color / Deletar */
+background: #FF669D;
+border-radius: 20px;
+}
+
 form.create-orphanage-form .leaflet-container{
   margin-bottom: 40px;
   border: 1px solid #D3E2E5;
@@ -170,3 +206,5 @@ form.create-orphanage-form button.confirm-button svg {
 form.create-orphanage-form button.confirm-button:hover {
   background: #36CF82;
 }
+
+

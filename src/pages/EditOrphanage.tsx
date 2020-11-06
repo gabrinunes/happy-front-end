@@ -5,20 +5,35 @@ import { LeafletMouseEvent } from 'leaflet';
 import { FiPlus } from 'react-icons/fi';
 import { useHistory, useParams } from 'react-router-dom';
 
+import { url } from 'inspector';
 import SideBar from '../components/Sidebar';
 
-import '../styles/pages/create-orphanage.css';
 import MapIcon from '../utils/mapIcon';
 import api from '../services/api';
+import { useAuth } from '../hooks/auth';
 
 interface OrphanageParams {
   id: string;
+}
+interface Orphanage {
+  name: string;
+  latitude: number;
+  longitude: number;
+  about: string;
+  instructions: string;
+  opening_hours: string;
+  open_on_weekends: string;
+  images: Array<{
+    id: number;
+    url: string;
+  }>;
 }
 
 export default function EditOrphanage() {
   const params = useParams<OrphanageParams>();
 
   const history = useHistory();
+  const { validOrphanage } = useAuth();
 
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
 
@@ -28,6 +43,7 @@ export default function EditOrphanage() {
   const [opening_hours, SetOpeningHours] = useState('');
   const [open_on_weekends, setOpenOnWeekends] = useState(true);
   const [images, SetImages] = useState<File[]>([]);
+  const [orphanages, SetOrphanages] = useState<Orphanage>();
   const [previewImages, SetPreviewImages] = useState<string[]>([]);
 
   useEffect(() => {
@@ -37,6 +53,7 @@ export default function EditOrphanage() {
       setInstructions(response.data.instructions);
       setOpenOnWeekends(response.data.open_on_weekends);
       SetOpeningHours(response.data.opening_hours);
+      SetOrphanages(response.data);
       setPosition({
         latitude: response.data.latitude,
         longitude: response.data.longitude,
@@ -62,11 +79,12 @@ export default function EditOrphanage() {
 
     SetImages(selectedImages);
 
-    const selectedImagesPreview = selectedImages.map(image =>
-      URL.createObjectURL(image),
-    );
+    const selectedImagesPreview = selectedImages.map(image => {
+      return URL.createObjectURL(image);
+    });
 
     SetPreviewImages(selectedImagesPreview);
+    console.log(selectedImagesPreview);
   }
 
   async function handleSubmit(event: FormEvent) {
@@ -92,6 +110,10 @@ export default function EditOrphanage() {
 
     // alert('cadastro realizado com sucesso!!!');
     // history.push('/app');
+  }
+
+  if (!orphanages) {
+    return <p>Carregando</p>;
   }
 
   return (
@@ -146,9 +168,12 @@ export default function EditOrphanage() {
               <label htmlFor="images">Fotos</label>
 
               <div className="images-container">
-                {previewImages.map(image => (
-                  <img key={image} src={image} alt={name} />
-                ))}
+                {previewImages.map(image => {
+                  return <img key={image} src={image} alt={name} />;
+                })}
+                {orphanages.images.map(image => {
+                  return <img key={image.id} src={image.url} alt={image.url} />;
+                })}
                 <label htmlFor="image[]" className="new-image">
                   <FiPlus size={24} color="#15b6d6" />
                 </label>
@@ -205,9 +230,20 @@ export default function EditOrphanage() {
             </div>
           </fieldset>
 
-          <button className="confirm-button" type="submit">
-            Confirmar
-          </button>
+          {validOrphanage ? (
+            <button className="confirm-button" type="submit">
+              Confirmar
+            </button>
+          ) : (
+            <div className="container-buttons">
+              <button className="delete-button" type="submit">
+                Excluir
+              </button>
+              <button className="accept-button" type="submit">
+                Confirmar
+              </button>
+            </div>
+          )}
         </form>
       </main>
     </div>

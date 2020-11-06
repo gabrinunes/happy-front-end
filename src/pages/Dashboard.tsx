@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-expressions */
 import React, { useEffect, useState } from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
-import { FiTrash, FiEdit } from 'react-icons/fi';
+import { FiTrash, FiEdit, FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import SideBar from '../components/Sidebar';
 import MapIcon from '../utils/mapIcon';
@@ -29,7 +29,12 @@ export default function Dashboard() {
           <h2 className="header-title">Cadastros Pendentes</h2>
         )}
         {orphanage.map(
-          (orph: { name: string; latitude: number; longitude: number }) => (
+          (orph: {
+            name: string;
+            latitude: number;
+            longitude: number;
+            id: string;
+          }) => (
             <div className="orphanage-content">
               <div className="orphanage-card">
                 <Map
@@ -45,14 +50,26 @@ export default function Dashboard() {
                 </Map>
                 <div className="orphanage-info">
                   <h2 className="orphanage-info-name">{orph.name}</h2>
-                  <div className="orphanage-icons">
-                    <Link to="orphanages/edit/1">
-                      <FiEdit size={14} color="#15C3D6" />
-                    </Link>
-                  </div>
-                  <div className="orphanage-icons">
-                    <FiTrash size={14} color="#15C3D6" onClick={() => {}} />
-                  </div>
+                  {validOrphanage ? (
+                    <>
+                      <div className="orphanage-icons">
+                        <Link to={`orphanages/edit/${orph.id}`}>
+                          <FiEdit size={14} color="#15C3D6" />
+                        </Link>
+                      </div>
+                      <div className="orphanage-icons">
+                        <Link to="orphanages/edit/1">
+                          <FiTrash size={14} color="#15C3D6" />
+                        </Link>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="orphanage-icons">
+                      <Link to={`orphanages/edit/${orph.id}`}>
+                        <FiArrowRight size={14} color="#15C3D6" />
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

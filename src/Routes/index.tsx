@@ -20,7 +20,11 @@ function Routes() {
         <Route path="/app" component={OrphanagesMap} />
 
         <Route path="/orphanages/create" component={CreateOrphanage} />
-        <Route path="/orphanages/edit/:id" component={EditOrphanage} />
+        <Route
+          path="/orphanages/edit/:id"
+          component={EditOrphanage}
+          isPrivate
+        />
         <Route path="/orphanages/:id" component={Orphanage} />
 
         <Route path="/login" component={Login} />
