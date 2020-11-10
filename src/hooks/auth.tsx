@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import api from '../services/api';
 
 interface User {
@@ -35,6 +36,9 @@ interface AuthContextData {
   validOrphanage: boolean | undefined;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
+  ValidOrphanage(idOrphanage: string): Promise<void>;
+  DeleteOrphanage(idOrphanage: string): Promise<void>;
+  UpdateOrphanage(idOrphanage: string, orphData: FormData): Promise<void>;
   GetListOrphanages(valid: boolean): Promise<void>;
 }
 
@@ -75,10 +79,26 @@ export const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const signOut = useCallback(() => {
-    localStorage.removeItem('@GoBarber:token');
-    localStorage.removeItem('@GoBarber:user');
+    localStorage.removeItem('@Happy:token');
+    localStorage.removeItem('@Happy:user');
 
     SetData({} as AuthState);
+  }, []);
+
+  const ValidOrphanage = useCallback(async idOrphanage => {
+    await api.post(`orphanages/validOrphanage/${idOrphanage}`, {
+      valid_orphanage: 'true',
+    });
+    alert('cadastrado com sucesso');
+    console.log(idOrphanage);
+  }, []);
+
+  const UpdateOrphanage = useCallback(async (idOrphanage, orphData) => {
+    await api.put(`orphanages/${idOrphanage}`, orphData);
+  }, []);
+
+  const DeleteOrphanage = useCallback(async idOrphanage => {
+    await api.delete(`orphanages/${idOrphanage}`);
   }, []);
 
   const GetListOrphanages = useCallback(async valid => {
@@ -102,6 +122,9 @@ export const AuthProvider: React.FC = ({ children }) => {
         GetListOrphanages,
         orphanage: dataOrphanage,
         validOrphanage,
+        ValidOrphanage,
+        DeleteOrphanage,
+        UpdateOrphanage,
       }}
     >
       {children}

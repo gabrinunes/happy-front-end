@@ -1,0 +1,49 @@
+.container{
+  display: flex;
+  height: 100vh;
+  flex-wrap: wrap;
+  width: auto;
+  background: #FF669D;
+
+  align-items: center;
+  justify-content: space-around;
+}
+
+.container-info{
+  display: flex;
+  flex-direction: column;
+}
+
+.container-text{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Delete-Alert{
+  font-weight: 800;
+  font-size: 80px;
+  line-height: 80px;
+  margin-bottom: 30px;
+}
+
+ .Delete-message{
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 34px;
+}
+.message-container{
+  display: flex;
+  flex-direction: row;
+}
+.image-logo{
+  margin-right: 181px;
+}
+.delete-button{
+  background: #D6487B;
+  margin-left: 15px;
+}
+.button-container{
+  margin-top: 25px;
+}
+

@@ -10,6 +10,7 @@ import EditOrphanage from '../pages/EditOrphanage';
 import Login from '../pages/Login';
 import ForgotPassword from '../pages/ForgotPassword';
 import ResetPasswrod from '../pages/ResetPassword';
+import DeletePage from '../pages/DeletePage';
 import Dashboard from '../pages/Dashboard';
 
 function Routes() {
@@ -25,6 +26,9 @@ function Routes() {
           component={EditOrphanage}
           isPrivate
         />
+
+        <Route path="/orphanage/delete/:id" component={DeletePage} isPrivate />
+
         <Route path="/orphanages/:id" component={Orphanage} />
 
         <Route path="/login" component={Login} />

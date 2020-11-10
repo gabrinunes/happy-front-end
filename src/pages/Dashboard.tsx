@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import { FiTrash, FiEdit, FiArrowLeft, FiArrowRight } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import SideBar from '../components/Sidebar';
 import MapIcon from '../utils/mapIcon';
 
@@ -12,6 +12,7 @@ import api from '../services/api';
 import { useAuth } from '../hooks/auth';
 
 export default function Dashboard() {
+  const history = useHistory();
   const { orphanage, validOrphanage, GetListOrphanages } = useAuth();
   const [valid, SetValidOrphanage] = useState(true);
 
@@ -58,7 +59,7 @@ export default function Dashboard() {
                         </Link>
                       </div>
                       <div className="orphanage-icons">
-                        <Link to="orphanages/edit/1">
+                        <Link to={`orphanage/delete/${orph.id}`}>
                           <FiTrash size={14} color="#15C3D6" />
                         </Link>
                       </div>

@@ -33,7 +33,12 @@ export default function EditOrphanage() {
   const params = useParams<OrphanageParams>();
 
   const history = useHistory();
-  const { validOrphanage } = useAuth();
+  const {
+    validOrphanage,
+    ValidOrphanage,
+    DeleteOrphanage,
+    UpdateOrphanage,
+  } = useAuth();
 
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
 
@@ -106,10 +111,20 @@ export default function EditOrphanage() {
       data.append('images', image);
     });
 
-    // await api.post('orphanages', data);
+    await UpdateOrphanage(params.id, data);
 
     // alert('cadastro realizado com sucesso!!!');
-    // history.push('/app');
+    history.push('/dashboard');
+  }
+
+  function handleValidateOrphanage(id: string) {
+    ValidOrphanage(id);
+    history.push('/dashboard');
+  }
+
+  function handleNotValidOrphanage(id: string) {
+    DeleteOrphanage(id);
+    history.push('/dashboard');
   }
 
   if (!orphanages) {
@@ -231,15 +246,27 @@ export default function EditOrphanage() {
           </fieldset>
 
           {validOrphanage ? (
-            <button className="confirm-button" type="submit">
+            <button
+              className="confirm-button"
+              type="submit"
+              onClick={handleSubmit}
+            >
               Confirmar
             </button>
           ) : (
             <div className="container-buttons">
-              <button className="delete-button" type="submit">
+              <button
+                className="delete-button"
+                type="submit"
+                onClick={() => handleNotValidOrphanage(params.id)}
+              >
                 Excluir
               </button>
-              <button className="accept-button" type="submit">
+              <button
+                className="accept-button"
+                type="submit"
+                onClick={() => handleValidateOrphanage(params.id)}
+              >
                 Confirmar
               </button>
             </div>
