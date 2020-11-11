@@ -11,6 +11,7 @@ import SideBar from '../components/Sidebar';
 import MapIcon from '../utils/mapIcon';
 import api from '../services/api';
 import { useAuth } from '../hooks/auth';
+import { useGeoLocation } from '../hooks/geolocation';
 
 interface OrphanageParams {
   id: string;
@@ -31,6 +32,7 @@ interface Orphanage {
 
 export default function EditOrphanage() {
   const params = useParams<OrphanageParams>();
+  const { location } = useGeoLocation();
 
   const history = useHistory();
   const {
@@ -141,7 +143,7 @@ export default function EditOrphanage() {
             <legend>Dados</legend>
 
             <Map
-              center={[-1.4423929, -48.4838452]}
+              center={[location.latitude, location.longitude]}
               style={{ width: '100%', height: 280 }}
               zoom={15}
               onclick={handleMapClick}

@@ -10,9 +10,11 @@ import MapIcon from '../utils/mapIcon';
 import '../styles/pages/dashboard.css';
 import api from '../services/api';
 import { useAuth } from '../hooks/auth';
+import { useGeoLocation } from '../hooks/geolocation';
 
 export default function Dashboard() {
   const history = useHistory();
+  const { location } = useGeoLocation();
   const { orphanage, validOrphanage, GetListOrphanages } = useAuth();
   const [valid, SetValidOrphanage] = useState(true);
 
@@ -39,7 +41,7 @@ export default function Dashboard() {
             <div className="orphanage-content">
               <div className="orphanage-card">
                 <Map
-                  center={[-1.4423929, -48.4838452]}
+                  center={[location.latitude, location.longitude]}
                   zoom={14}
                   style={{ width: '100%', height: '80%' }}
                 >

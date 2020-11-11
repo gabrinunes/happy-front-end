@@ -8,6 +8,7 @@ import mapMarkerImg from '../images/map-marker.svg';
 
 import '../styles/pages/orphanages-map.css';
 import MapIcon from '../utils/mapIcon';
+import { useGeoLocation } from '../hooks/geolocation';
 
 interface Orphanage {
   id: number;
@@ -18,6 +19,8 @@ interface Orphanage {
 
 function OrphangesMap() {
   const [orphanges, setOrphanages] = useState<Orphanage[]>([]);
+
+  const { location } = useGeoLocation();
 
   useEffect(() => {
     api.get<Orphanage[]>('orphanages').then(response => {
@@ -42,7 +45,7 @@ function OrphangesMap() {
       </aside>
 
       <Map
-        center={[-1.4423929, -48.4838452]}
+        center={[location?.latitude, location?.longitude]}
         zoom={14}
         style={{ width: '100%', height: '100%' }}
       >

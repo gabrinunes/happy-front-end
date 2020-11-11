@@ -11,7 +11,7 @@ interface SidebarProps {
 }
 
 export default function SideBar({ showIconsDashboard }: SidebarProps) {
-  const { signOut, GetListOrphanages } = useAuth();
+  const { signOut, GetListOrphanages, lengthOrphanageInvalid } = useAuth();
   const { goBack } = useHistory();
 
   return (
@@ -31,7 +31,11 @@ export default function SideBar({ showIconsDashboard }: SidebarProps) {
             className="button-dashboard"
             onClick={() => GetListOrphanages(false)}
           >
-            <FiAlertCircle size={18} color="#FFF" />
+            {lengthOrphanageInvalid.length > 0 ? (
+              <FiArrowLeft size={18} color="#FFF" />
+            ) : (
+              <FiAlertCircle size={18} color="#FFF" />
+            )}
           </button>
         </div>
       ) : (

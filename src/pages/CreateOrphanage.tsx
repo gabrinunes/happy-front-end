@@ -9,9 +9,11 @@ import SideBar from '../components/Sidebar';
 import '../styles/pages/create-orphanage.css';
 import MapIcon from '../utils/mapIcon';
 import api from '../services/api';
+import { useGeoLocation } from '../hooks/geolocation';
 
 export default function CreateOrphanage() {
   const history = useHistory();
+  const { location } = useGeoLocation();
 
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
 
@@ -82,7 +84,7 @@ export default function CreateOrphanage() {
             <legend>Dados</legend>
 
             <Map
-              center={[-1.4423929, -48.4838452]}
+              center={[location.latitude, location.longitude]}
               style={{ width: '100%', height: 280 }}
               zoom={15}
               onclick={handleMapClick}
@@ -109,7 +111,9 @@ export default function CreateOrphanage() {
 
             <div className="input-block">
               <label htmlFor="about">
-                Sobre <span>Máximo de 300 caracteres</span>
+                Sobre
+{' '}
+<span>Máximo de 300 caracteres</span>
               </label>
               <textarea
                 id="name"

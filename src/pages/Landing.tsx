@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { FiArrowRight } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import logoImg from '../images/Logo.svg';
 import '../styles/pages/landing.css';
+import { useGeoLocation } from '../hooks/geolocation';
 
 function Landing() {
+  const { getLocation, location } = useGeoLocation();
+
+  useEffect(() => {
+    getLocation();
+  }, []);
+
+  if (!location) {
+    return <div />;
+  }
+
   return (
     <div id="page-landing">
       <div className="content-wrapper">
@@ -17,8 +28,8 @@ function Landing() {
         </main>
 
         <div className="location">
-          <strong>Belém</strong>
-          <span>Pará</span>
+          <strong>{location.cidade}</strong>
+          <span>{location.estado}</span>
         </div>
 
         <Link to="/app" className="enter-app">

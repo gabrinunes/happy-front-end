@@ -1,4 +1,10 @@
-import React, { createContext, useCallback, useState, useContext } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useState,
+  useContext,
+  useEffect,
+} from 'react';
 import { useHistory } from 'react-router-dom';
 import api from '../services/api';
 
@@ -34,6 +40,7 @@ interface AuthContextData {
   user: User;
   orphanage: any;
   validOrphanage: boolean | undefined;
+  lengthOrphanageInvalid: Array<string>;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
   ValidOrphanage(idOrphanage: string): Promise<void>;
@@ -47,12 +54,13 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 export const AuthProvider: React.FC = ({ children }) => {
   const [validOrphanage, SetValidOrphanage] = useState<boolean>();
   const [dataOrphanage, SetDataOrphanage] = useState([]);
+  const [lengthOrphanageInvalid, SetLenghtOrphanageInvalid] = useState([]);
   const [data, SetData] = useState<AuthState>(() => {
     const token = localStorage.getItem('@Happy:token');
     const user = localStorage.getItem('@Happy:user');
     const rememberLog = localStorage.getItem('@Happy:remember');
 
-    if (token && user && rememberLog === 'true') {
+    if (token && user) {
       api.defaults.headers.Authorization = `Bearer ${token}`;
 
       return { token, user: JSON.parse(user) };
@@ -60,6 +68,12 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     return {} as AuthState;
   });
+
+  useEffect(() => {
+    api.get('/orphanages/NotValidOrphanage').then(response => {
+      SetLenghtOrphanageInvalid(response.data);
+    });
+  }, [dataOrphanage]);
 
   const signIn = useCallback(async ({ email, password, rememberLogin }) => {
     const response = await api.post('session', {
@@ -71,9 +85,11 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     const { token, user } = response.data;
 
-    localStorage.setItem('@Happy:token', token);
-    localStorage.setItem('@Happy:user', JSON.stringify(user));
-    localStorage.setItem('@Happy:remember', rememberLogin);
+    if (rememberLogin) {
+      localStorage.setItem('@Happy:token', token);
+      localStorage.setItem('@Happy:user', JSON.stringify(user));
+      localStorage.setItem('@Happy:remember', rememberLogin);
+    }
 
     SetData({ token, user });
   }, []);
@@ -125,6 +141,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         ValidOrphanage,
         DeleteOrphanage,
         UpdateOrphanage,
+        lengthOrphanageInvalid,
       }}
     >
       {children}
