@@ -61,7 +61,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     const rememberLog = localStorage.getItem('@Happy:remember');
 
     if (token && user) {
-      api.defaults.headers.Authorization = `Bearer ${token}`;
+      // api.defaults.headers.Authorization = `Bearer ${token}`; parou de funcionar
 
       return { token, user: JSON.parse(user) };
     }
@@ -101,20 +101,46 @@ export const AuthProvider: React.FC = ({ children }) => {
     SetData({} as AuthState);
   }, []);
 
+  const RefreshOrphanageList = useCallback(async () => {
+    const response = await api.get('/orphanages');
+    SetDataOrphanage(response.data);
+  }, []);
+
   const ValidOrphanage = useCallback(async idOrphanage => {
-    await api.post(`orphanages/validOrphanage/${idOrphanage}`, {
-      valid_orphanage: 'true',
-    });
-    alert('cadastrado com sucesso');
+    await api.post(
+      `orphanages/validOrphanage/${idOrphanage}`,
+      {
+        valid_orphanage: 'true',
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('@Happy:token')}`,
+        },
+      },
+    );
+    RefreshOrphanageList();
     console.log(idOrphanage);
   }, []);
 
   const UpdateOrphanage = useCallback(async (idOrphanage, orphData) => {
-    await api.put(`orphanages/${idOrphanage}`, orphData);
+    await api.put(
+      `orphanages/${idOrphanage}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('@Happy:token')}`,
+        },
+      },
+      orphData,
+    );
   }, []);
 
   const DeleteOrphanage = useCallback(async idOrphanage => {
-    await api.delete(`orphanages/${idOrphanage}`);
+    await api.delete(`orphanages/${idOrphanage}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('@Happy:token')}`,
+      },
+    });
+    RefreshOrphanageList();
   }, []);
 
   const GetListOrphanages = useCallback(async valid => {

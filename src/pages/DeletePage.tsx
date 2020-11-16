@@ -25,7 +25,7 @@ export default function DeletePage() {
     api.get(`orphanages/${params.id}`).then(response => {
       SetOrphanage(response.data);
     });
-  });
+  }, []);
 
   function HandleDeleteOrphanage(id: string) {
     DeleteOrphanage(id);

@@ -1,5 +1,12 @@
 import React from 'react';
-import { FiArrowLeft, FiPower, FiMapPin, FiAlertCircle } from 'react-icons/fi';
+import {
+  FiArrowLeft,
+  FiPower,
+  FiMapPin,
+  FiAlertCircle,
+  FiAtSign,
+  FiCircle,
+} from 'react-icons/fi';
 import mapMarkerImg from '../images/map-marker.svg';
 
 import '../styles/components/sidebar.css';
@@ -32,7 +39,7 @@ export default function SideBar({ showIconsDashboard }: SidebarProps) {
             onClick={() => GetListOrphanages(false)}
           >
             {lengthOrphanageInvalid.length > 0 ? (
-              <FiArrowLeft size={18} color="#FFF" />
+              <FiCircle size={18} color="#FFF" />
             ) : (
               <FiAlertCircle size={18} color="#FFF" />
             )}

@@ -7,6 +7,8 @@ import { Link, useHistory } from 'react-router-dom';
 import SideBar from '../components/Sidebar';
 import MapIcon from '../utils/mapIcon';
 
+import {} from 'react';
+
 import '../styles/pages/dashboard.css';
 import api from '../services/api';
 import { useAuth } from '../hooks/auth';
