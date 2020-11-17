@@ -9,7 +9,7 @@ interface Location {
 }
 
 interface GeoLocationContextData {
-  location: any;
+  location: Location | undefined;
   getLocation(): void;
 }
 

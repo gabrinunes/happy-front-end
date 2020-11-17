@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 
 import '../styles/pages/forgot-password.css';
-import { Link } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { FiArrowLeft, FiEye, FiEyeOff } from 'react-icons/fi';
 import logoImg from '../images/Logotipo.svg';
+import api from '../services/api';
+
+interface OrphanageParams {
+  id: string;
+}
 
 export default function ForgotPassword() {
+  const params = useParams<OrphanageParams>();
+  const history = useHistory();
   const [showEye, SetShowEye] = useState(true);
+  const [inputPassword, SetInputPassword] = useState<string>();
   const [showEyeConfirmation, SetShowEyeConfirmation] = useState(true);
   const [type, SetType] = useState('password');
   const [typeConfirmation, SetTypeConfirmation] = useState('password');
@@ -33,6 +41,18 @@ export default function ForgotPassword() {
     SetShowEyeConfirmation(true);
     SetTypeConfirmation('password');
     console.log(showEye);
+  }
+
+  async function HandleResetPassword() {
+    try {
+      api.post(`users/ResetPassword/${params.id}`, {
+        newPassword: inputPassword,
+      });
+      alert('senha resetada com sucesso!!!!');
+      history.push('/');
+    } catch (error) {
+      alert('erro ao resetar senha!!!');
+    }
   }
 
   return (
@@ -64,7 +84,11 @@ export default function ForgotPassword() {
             className="eye"
           />
         )}
-        <input type={type} />
+        <input
+          type={type}
+          value={inputPassword}
+          onChange={e => SetInputPassword(e.target.value)}
+        />
 
         <label>Repetir Senha</label>
         {showEyeConfirmation ? (
@@ -88,9 +112,9 @@ export default function ForgotPassword() {
           <FiArrowLeft size={22} color="#15C3D6" />
         </Link>
 
-        <Link to="/" className="send-button">
+        <button className="send-button" onClick={HandleResetPassword}>
           Entrar
-        </Link>
+        </button>
       </div>
     </div>
   );

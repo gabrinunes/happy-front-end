@@ -73,6 +73,10 @@ export default function CreateOrphanage() {
     history.push('/orphanageCreated');
   }
 
+  if (!location) {
+    return <div />;
+  }
+
   return (
     <div id="page-create-orphanage">
       <SideBar />

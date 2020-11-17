@@ -32,7 +32,7 @@ interface Orphanage {
 
 export default function EditOrphanage() {
   const params = useParams<OrphanageParams>();
-  const { location } = useGeoLocation();
+  const { location, getLocation } = useGeoLocation();
 
   const history = useHistory();
   const {
@@ -68,6 +68,10 @@ export default function EditOrphanage() {
       console.log(response.data);
     });
   }, [params.id]);
+
+  useEffect(() => {
+    getLocation();
+  }, []);
 
   function handleMapClick(event: LeafletMouseEvent) {
     const { lat, lng } = event.latlng;
@@ -131,6 +135,10 @@ export default function EditOrphanage() {
 
   if (!orphanages) {
     return <p>Carregando</p>;
+  }
+
+  if (!location) {
+    return <div />;
   }
 
   return (

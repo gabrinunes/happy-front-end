@@ -16,13 +16,21 @@ import { useGeoLocation } from '../hooks/geolocation';
 
 export default function Dashboard() {
   const history = useHistory();
-  const { location } = useGeoLocation();
+  const { location, getLocation } = useGeoLocation();
   const { orphanage, validOrphanage, GetListOrphanages } = useAuth();
   const [valid, SetValidOrphanage] = useState(true);
 
   useEffect(() => {
     GetListOrphanages(valid);
   }, []);
+
+  useEffect(() => {
+    getLocation();
+  }, []);
+
+  if (!location) {
+    return <div />;
+  }
 
   return (
     <div>

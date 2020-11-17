@@ -20,7 +20,7 @@ interface Orphanage {
 function OrphangesMap() {
   const [orphanges, setOrphanages] = useState<Orphanage[]>([]);
 
-  const { location } = useGeoLocation();
+  const { location, getLocation } = useGeoLocation();
 
   useEffect(() => {
     api.get<Orphanage[]>('orphanages').then(response => {
@@ -28,6 +28,14 @@ function OrphangesMap() {
       console.log(response.data);
     });
   }, []);
+
+  useEffect(() => {
+    getLocation();
+  }, []);
+
+  if (!location) {
+    return <div />;
+  }
 
   return (
     <div id="page-map">
@@ -45,7 +53,7 @@ function OrphangesMap() {
       </aside>
 
       <Map
-        center={[location?.latitude, location?.longitude]}
+        center={[location.latitude, location.longitude]}
         zoom={14}
         style={{ width: '100%', height: '100%' }}
       >

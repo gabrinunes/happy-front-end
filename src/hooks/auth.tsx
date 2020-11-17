@@ -76,22 +76,22 @@ export const AuthProvider: React.FC = ({ children }) => {
   }, [dataOrphanage]);
 
   const signIn = useCallback(async ({ email, password, rememberLogin }) => {
-    const response = await api.post('session', {
-      email,
-      password,
-    });
+    try {
+      const response = await api.post('session', {
+        email,
+        password,
+      });
+      const { token, user } = response.data;
+      if (rememberLogin) {
+        localStorage.setItem('@Happy:token', token);
+        localStorage.setItem('@Happy:user', JSON.stringify(user));
+        localStorage.setItem('@Happy:remember', rememberLogin);
+      }
 
-    console.log(response.data.user);
-
-    const { token, user } = response.data;
-
-    if (rememberLogin) {
-      localStorage.setItem('@Happy:token', token);
-      localStorage.setItem('@Happy:user', JSON.stringify(user));
-      localStorage.setItem('@Happy:remember', rememberLogin);
+      SetData({ token, user });
+    } catch (error) {
+      alert('Usuário/Senha,Incorretos por favor tente novamente !!');
     }
-
-    SetData({ token, user });
   }, []);
 
   const signOut = useCallback(() => {
